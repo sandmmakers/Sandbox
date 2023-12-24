@@ -7,6 +7,18 @@ on:
 
 jobs:
   Build:
+    name: Build
     uses: ./.github/workflows/build.yaml
     with:
       tag: ${{  github.ref_name }}
+  Release:
+    name: Release
+    needs: Build
+    steps:
+      - name: create_release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          prerelease: true
+          release_name: ${{  github.ref_name }}
+          tag_name: ${{  github.ref_name }}
