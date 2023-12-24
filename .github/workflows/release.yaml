@@ -16,10 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: Build
     steps:
-      - name: create_release
-        uses: actions/create-release@v1
-        id: create_release
-        with:
-          prerelease: true
-          release_name: ${{  github.ref_name }}
-          tag_name: ${{  github.ref_name }}
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+              --prerelease \
+              --verify-tag
