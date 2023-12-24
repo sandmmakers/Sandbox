@@ -6,12 +6,7 @@ on:
       - '*'
 
 jobs:
-  build-linux:
-    name: Linux
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v4
-      - name: Create artifact
-        shell: bash
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}"
+  Build:
+    uses: ./.github/workflows/build.yaml
+    with:
+      tag: ${{  github.ref_name }}
