@@ -1,0 +1,25 @@
+name: 'Create release'
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-release:
+    name: Sandbox
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build all
+        shell: bash
+        run: |
+          ./build_all
+      - name: Create artifact
+        shell: bash
+        run: |
+          7z a Install/Sandbox.7z Install/Sandbox
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Artifact
+          path: Install/Sandbox.7z
