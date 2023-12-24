@@ -13,6 +13,7 @@ jobs:
       tag: ${{  github.ref_name }}
   Release:
     name: Release
+    runs-on: linux-latest
     needs: Build
     steps:
       - name: create_release
