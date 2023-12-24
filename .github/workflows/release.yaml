@@ -28,6 +28,12 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
       - name: Build all
         shell: bash
         run: |
@@ -35,6 +41,7 @@ jobs:
       - name: Create artifact
         shell: bash
         run: |
+          python3 Buildsystem/CreateReleaseVersionFile.py ${{  github.ref_name }} Install/Sandbox
           tar zcvf Install/Sandbox.tgz Install/Sandbox
       - uses: actions/upload-artifact@v4
         with:
