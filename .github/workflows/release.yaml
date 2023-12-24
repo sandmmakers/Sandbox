@@ -24,7 +24,7 @@ jobs:
         env:
           tag: ${{ github.ref_name }}
         run: |
-          mv Linux-Artifacts Sandbox-${tag}
+          mv Artifacts-Linux Sandbox-${tag}
           tar zcvf Sandbox-${tag}-linux-x86_64.tgz Sandbox-${tag}
       - name: Create release
         env:
