@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
       - name: display
-        run: ls -la
+        run: ls -la Artifacts-Linux
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
