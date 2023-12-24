@@ -8,24 +8,24 @@ on:
         type: string
 
 jobs:
-  build-windows:
-    name: Windows
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build all
-        shell: bash
-        run: |
-          ./build_all
-      - name: Create artifact
-        shell: bash
-        run: |
-          7z a Install/Sandbox.7z Install/Sandbox
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Artifact-Windows
-          path: Install/Sandbox.7z
-          if-no-files-found: error
+#  build-windows:
+#    name: Windows
+#    runs-on: windows-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Build all
+#        shell: bash
+#        run: |
+#          ./build_all
+#      - name: Create artifact
+#        shell: bash
+#        run: |
+#          7z a Install/Sandbox.7z Install/Sandbox
+#      - uses: actions/upload-artifact@v4
+#        with:
+#          name: Artifact-Windows
+#          path: Install/Sandbox.7z
+#          if-no-files-found: error
 
   build-linux:
     name: Linux
@@ -42,31 +42,36 @@ jobs:
         shell: bash
         run: |
           ./build_all
-      - name: Create artifact
+      - name: Create release version file
+        if: ${{ inputs.tag != '' }}
         shell: bash
         run: |
           python3 Buildsystem/CreateReleaseVersionFile.py ${{  inputs.tag }} Install/Sandbox
+      - name: Create artifacts archive
+        shell: bash
+        run: |
+          tar zcvf Install/Artifacts-Linux.tgz Install/Sandbox/*
       - uses: actions/upload-artifact@v4
         with:
-          name: Artifact-Linux
+          name: Artifacts-Linux
           path: Install/Sandbox
           if-no-files-found: error
 
-  build-macos:
-    name: MacOS
-    runs-on: macos-11
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build all
-        shell: bash
-        run: |
-          ./build_all
-      - name: Create artifact
-        shell: bash
-        run: |
-          tar zcvf Install/Sandbox.tgz Install/Sandbox
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Artifact-MacOS
-          path: Install/Sandbox.tgz
-          if-no-files-found: error
+#  build-macos:
+#    name: MacOS
+#    runs-on: macos-11
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Build all
+#        shell: bash
+#        run: |
+#          ./build_all
+#      - name: Create artifact
+#        shell: bash
+#        run: |
+#          tar zcvf Install/Sandbox.tgz Install/Sandbox
+#      - uses: actions/upload-artifact@v4
+#        with:
+#          name: Artifact-MacOS
+#          path: Install/Sandbox.tgz
+#          if-no-files-found: error
