@@ -21,5 +21,5 @@ jobs:
           7z a Install/Sandbox.7z Install/Sandbox
       - uses: actions/upload-artifact@v4
         with:
-          name: Artifact
+          name: Artifact2
           path: Install/Sandbox.7z
