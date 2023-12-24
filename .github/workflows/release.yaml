@@ -40,3 +40,20 @@ jobs:
         with:
           name: ArtifactL
           path: Install/Sandbox.tgz
+  build-macos:
+    name: MacOS
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build all
+        shell: bash
+        run: |
+          ./build_all
+      - name: Create artifact
+        shell: bash
+        run: |
+          tar zcvf Install/Sandbox.tgz Install/Sandbox
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ArtifactM
+          path: Install/Sandbox.tgz
