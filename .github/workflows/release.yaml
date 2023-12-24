@@ -36,4 +36,5 @@ jobs:
               --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
               --prerelease \
               --verify-tag \
+              --generate-notes \
               Sandbox-${tag}-linux-x86_64.tgz
