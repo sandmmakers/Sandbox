@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: Build
     steps:
+      - uses: actions/download-artifact@v4
+      - name: display
+        run: ls -la
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
