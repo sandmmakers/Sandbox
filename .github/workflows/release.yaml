@@ -6,8 +6,8 @@ on:
       - '*'
 
 jobs:
-  build-release:
-    name: Sandbox
+  build-windows:
+    name: Windows
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,5 +21,22 @@ jobs:
           7z a Install/Sandbox.7z Install/Sandbox
       - uses: actions/upload-artifact@v4
         with:
-          name: Artifact2
+          name: ArtifactW
           path: Install/Sandbox.7z
+  build-linux:
+    name: Linux
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build all
+        shell: bash
+        run: |
+          ./build_all
+      - name: Create artifact
+        shell: bash
+        run: |
+          tar zcvf Install/Sandbox.tgz Install/Sandbox
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ArtifactL
+          path: Install/Sandbox.tgz
