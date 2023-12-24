@@ -20,8 +20,12 @@ jobs:
     needs: Build
     steps:
       - uses: actions/download-artifact@v4
-      - name: display
-        run: ls -la Artifacts-Linux
+      - name: Create assets
+        env:
+          tag: ${{ github.ref_name }}
+        run: |
+          mv Linux-Artifacts Sandbox-${tag}
+          tar zcvf Sandbox-${tag}-linux-x86_64.tgz Sandbox-${tag}
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,4 +35,5 @@ jobs:
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
               --prerelease \
-              --verify-tag
+              --verify-tag \
+              Sandbox-${tag}-linux-x86_64.tgz
