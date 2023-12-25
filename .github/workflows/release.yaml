@@ -23,7 +23,7 @@ jobs:
       - name: Create assets
         env:
           tag: ${{ github.ref_name }}
-          linux_stem: Sandbox-${tag}-linux-x86_64
+          linux_stem: Sandbox-${{ github.ref_name }}-linux-x86_64
         run: |
           ls
           ls Artifacts-Windows
