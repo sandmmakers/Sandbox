@@ -45,6 +45,6 @@ jobs:
               --prerelease \
               --verify-tag \
               --generate-notes \
-              Sandbox-${tag}-windows-x86_64.tgz \
+              Sandbox-${tag}-windows-x86_64.7z \
               Sandbox-${tag}-linux-x86_64.tgz \
               Sandbox-${tag}-macos-x86_64.tgz
