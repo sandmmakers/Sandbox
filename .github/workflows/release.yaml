@@ -23,12 +23,15 @@ jobs:
       - name: Create assets
         env:
           tag: ${{ github.ref_name }}
-          linux-stem: Sandbox-${tag}-linux-x86_64
+          linux_stem: Sandbox-${tag}-linux-x86_64
         run: |
+          ls
+          ls Artifacts-Windows
           mv Artifacts-Windows Sandbox-${tag}-windows-x86_64
+          ls Sandbox-${tag}-windows-x86_64
           7z a Sandbox-${tag}-windows-x86_64.7z Sandbox-${tag}-windows-x86_64
           mv Artifacts-Linux Sandbox-${tag}-linux-x86_64
-          tar zcvf Sandbox-${tag}-linux-x86_64.tgz ${linux-stem}
+          tar zcvf Sandbox-${tag}-linux-x86_64.tgz ${linux_stem}
           mv Artifacts-MacOS Sandbox-${tag}-macos-x86_64
           tar zcvf Sandbox-${tag}-macos-x86_64.tgz Sandbox-${tag}-macos-x86_64
       - name: Create release
