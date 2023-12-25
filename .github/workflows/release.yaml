@@ -8,6 +8,8 @@ on:
 permissions:
   contents: write
 
+environment: Deployment
+
 # Comment
 jobs:
   Build:
