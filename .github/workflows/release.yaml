@@ -8,8 +8,6 @@ on:
 permissions:
   contents: write
 
-environment: Deployment
-
 # Comment
 jobs:
   Build:
@@ -21,6 +19,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     needs: Build
+    environment: Deployment
     env:
       tag: ${{ github.ref_name }}
       windows_stem: Sandbox-${{ github.ref_name }}-windows-x86_64
