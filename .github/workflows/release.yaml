@@ -43,10 +43,15 @@ jobs:
               ${linux_stem}.tgz \
               ${macos_stem}.tgz \
               > ${hashes_file}
+      - name: Configure signing key
+        env: SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        run: |
+          mkdir -p ~/.gnupg/
+          printf "$GPG_SIGNING_KEY" > ~/.gnupg/private.key
+          gpg --import ~/.gnupg/private.key
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          STEVE: ${{ secrets.STEVE }}
         run: |
           gh release create "$tag" \
               --repo="$GITHUB_REPOSITORY" \
