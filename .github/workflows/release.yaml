@@ -43,6 +43,7 @@ jobs:
               ${linux_stem}.tgz \
               ${macos_stem}.tgz \
               > ${hashes_file}
+          cat ${hashes_file}
       - name: Sign hashes file
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
