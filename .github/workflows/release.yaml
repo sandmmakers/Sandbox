@@ -44,7 +44,8 @@ jobs:
               ${macos_stem}.tgz \
               > ${hashes_file}
       - name: Configure signing key
-        env: SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
         run: |
           mkdir -p ~/.gnupg/
           printf "$GPG_SIGNING_KEY" > ~/.gnupg/private.key
