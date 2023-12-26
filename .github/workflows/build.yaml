@@ -30,6 +30,7 @@ jobs:
         run: |
           ./build_all
       - name: Create release version file
+        shell: bash
         if: ${{ inputs.TAG != '' }}
         run: |
           python Buildsystem/CreateReleaseVersionFile.py ${{  inputs.TAG }} "$INSTALL_DIR"
