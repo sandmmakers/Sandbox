@@ -48,7 +48,7 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
         run: |
           mkdir -p ~/.gnupg/
-          printf "$SIGNING_KEY" > ~/.gnupg/private.key
+          printf '%s' "$SIGNING_KEY" > ~/.gnupg/private.key
           chmod 400 ~/.gnupg/private.key
           chmod 500 ~/.gnupg
           gpg --import ~/.gnupg/private.key
