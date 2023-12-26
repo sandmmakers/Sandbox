@@ -8,7 +8,6 @@ on:
 permissions:
   contents: write
 
-# Comment2
 jobs:
   Build:
     name: Build
@@ -26,6 +25,7 @@ jobs:
       linux_stem: Sandbox-${{ github.ref_name }}-linux-x86_64
       macos_stem: Sandbox-${{ github.ref_name }}-macos-x86_64
       hashes_file: Sandbox-${{ github.ref_name }}-SHA-256.txt
+      asc_file: Sandbox-${{ github.ref_name }}-SHA-256.txt.asc
     steps:
       - uses: actions/download-artifact@v4
       - name: Create assets
@@ -43,7 +43,7 @@ jobs:
               ${linux_stem}.tgz \
               ${macos_stem}.tgz \
               > ${hashes_file}
-      - name: Configure signing key
+      - name: Sign hashes file
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
           GPG_SIGNING_KEY_PASSWORD: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
@@ -53,6 +53,7 @@ jobs:
           printf '%s' "$GPG_SIGNING_KEY" > ~/.gnupg/private.key
           chmod 400 ~/.gnupg/private.key
           printf '%s' $GPG_SIGNING_KEY_PASSWORD | gpg --batch --pinentry-mode loopback --passphrase-fd 0 --import ~/.gnupg/private.key
+          printf '%s' $GPG_SIGNING_KEY_PASSWORD | gpg --batch --pinentry-mode loopback --passphrase-fd 0 --armor --output ${asc_file} --detach-sig ${hashes_file}
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -66,4 +67,5 @@ jobs:
               ${windows_stem}.7z \
               ${linux_stem}.tgz \
               ${macos_stem}.tgz \
-              ${hashes_file}
+              ${hashes_file} \
+              ${asc_file}
