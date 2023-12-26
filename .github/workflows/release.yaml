@@ -8,9 +8,6 @@ on:
 permissions:
   contents: write
 
-env:
-  STEM: Sandbox-${{ github.ref_name }}-
-
 jobs:
   Build:
     name: Build
@@ -24,7 +21,7 @@ jobs:
     environment: Deployment
     env:
       TAG: ${{ github.ref_name }}
-      WINDOWS_STEM: ${{ env.STEM }}windows-x86_64
+      WINDOWS_STEM: Sandbox-${{ github.ref_name }}-windows-x86_64
       LINUX_STEM: Sandbox-${{ github.ref_name }}-linux-x86_64
       MACOS_STEM: Sandbox-${{ github.ref_name }}-macos-x86_64
       HASHES_FILE: Sandbox-${{ github.ref_name }}-SHA-256.txt
