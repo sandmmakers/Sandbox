@@ -46,15 +46,17 @@ jobs:
           cat ${hashes_file}
       - name: Sign hashes file
         env:
+          GNUPGHOME: ~/.gnupg
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
           GPG_SIGNING_KEY_PASSWORD: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
         run: |
-          mkdir -p ~/.gnupg/
+          mkdir -p ~/.gnupg
           chmod 700 ~/.gnupg
           printf '%s' "$GPG_SIGNING_KEY" > ~/.gnupg/private.key
           chmod 400 ~/.gnupg/private.key
           printf '%s' $GPG_SIGNING_KEY_PASSWORD | gpg --batch --pinentry-mode loopback --passphrase-fd 0 --import ~/.gnupg/private.key
           printf '%s' $GPG_SIGNING_KEY_PASSWORD | gpg --batch --pinentry-mode loopback --passphrase-fd 0 --armor --output ${asc_file} --detach-sig ${hashes_file}
+          rm -rf ~/.gnupg
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
