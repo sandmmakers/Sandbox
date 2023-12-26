@@ -36,7 +36,7 @@ jobs:
           tar zcvf ${linux_stem}.tgz ${linux_stem}
           mv Artifacts-MacOS ${macos_stem}
           tar zcvf ${macos_stem}.tgz ${macos_stem}
-      - name: Create summary files
+      - name: Create hashes file
         run: |
           sha256sum --binary \
               ${windows_stem}.7z \
