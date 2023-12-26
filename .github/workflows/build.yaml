@@ -10,7 +10,7 @@ on:
         type: string
 
 env:
-  install_dir: Install/Sandbox
+  INSTALL_DIR: Install/Sandbox
 
 jobs:
   build-windows:
@@ -31,11 +31,11 @@ jobs:
       - name: Create release version file
         if: ${{ inputs.tag != '' }}
         run: |
-          python Buildsystem/CreateReleaseVersionFile.py ${{  inputs.tag }} ${{ env.install_dir }}
+          python Buildsystem/CreateReleaseVersionFile.py ${{  inputs.tag }} ${{ env.INSTALL_DIR }}
       - uses: actions/upload-artifact@v4
         with:
           name: Artifacts-Windows
-          path: ${{ env.install_dir }}
+          path: ${{ env.INSTALL_DIR }}
           if-no-files-found: error
 
   build-linux:
@@ -55,11 +55,11 @@ jobs:
       - name: Create release version file
         if: ${{ inputs.tag != '' }}
         run: |
-          python3 Buildsystem/CreateReleaseVersionFile.py ${{  inputs.tag }} ${{ env.install_dir }}
+          python3 Buildsystem/CreateReleaseVersionFile.py ${{  inputs.tag }} "$INSTALL_DIR"
       - uses: actions/upload-artifact@v4
         with:
           name: Artifacts-Linux
-          path: ${{ env.install_dir }}
+          path: ${{ env.INSTALL_DIR }}
           if-no-files-found: error
 
   build-macos:
@@ -79,9 +79,9 @@ jobs:
       - name: Create release version file
         if: ${{ inputs.tag != '' }}
         run: |
-          python3 Buildsystem/CreateReleaseVersionFile.py ${{  inputs.tag }} ${{ env.install_dir }}
+          python3 Buildsystem/CreateReleaseVersionFile.py ${{  inputs.tag }} ${{ env.INSTALL_DIR }}
       - uses: actions/upload-artifact@v4
         with:
           name: Artifacts-MacOS
-          path: ${{ env.install_dir }}
+          path: ${{ env.INSTALL_DIR }}
           if-no-files-found: error
