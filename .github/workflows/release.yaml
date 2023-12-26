@@ -50,9 +50,9 @@ jobs:
         run: |
           mkdir -p ~/.gnupg/
           chmod 700 ~/.gnupg
-          printf '%s' "$SIGNING_KEY" > ~/.gnupg/private.key
+          printf '%s' "$GPG_SIGNING_KEY" > ~/.gnupg/private.key
           chmod 400 ~/.gnupg/private.key
-          gpg --batch --pinentry-mode loopback --passphrase-fd 0 --import ~/.gnupg/private.key
+          printf '%s' $GPG_SIGNING_KEY_PASSWORD | gpg --batch --pinentry-mode loopback --passphrase-fd 0 --import ~/.gnupg/private.key
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
