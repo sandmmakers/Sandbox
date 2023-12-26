@@ -5,7 +5,7 @@ on:
     branches: main
   workflow_call:
     inputs:
-      tag:
+      TAG:
         required: false
         type: string
 
@@ -30,9 +30,9 @@ jobs:
         run: |
           ./build_all
       - name: Create release version file
-        if: ${{ inputs.tag != '' }}
+        if: ${{ inputs.TAG != '' }}
         run: |
-          python Buildsystem/CreateReleaseVersionFile.py ${{  inputs.tag }} "$INSTALL_DIR"
+          python Buildsystem/CreateReleaseVersionFile.py ${{  inputs.TAG }} "$INSTALL_DIR"
       - uses: actions/upload-artifact@v4
         with:
           name: Artifacts-Windows
@@ -46,7 +46,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
@@ -54,9 +54,9 @@ jobs:
         run: |
           ./build_all
       - name: Create release version file
-        if: ${{ inputs.tag != '' }}
+        if: ${{ inputs.TAG != '' }}
         run: |
-          python3 Buildsystem/CreateReleaseVersionFile.py ${{  inputs.tag }} "$INSTALL_DIR"
+          python3 Buildsystem/CreateReleaseVersionFile.py ${{  inputs.TAG }} "$INSTALL_DIR"
       - uses: actions/upload-artifact@v4
         with:
           name: Artifacts-Linux
@@ -70,7 +70,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
@@ -78,9 +78,9 @@ jobs:
         run: |
           ./build_all
       - name: Create release version file
-        if: ${{ inputs.tag != '' }}
+        if: ${{ inputs.TAG != '' }}
         run: |
-          python3 Buildsystem/CreateReleaseVersionFile.py ${{  inputs.tag }} "$INSTALL_DIR"
+          python3 Buildsystem/CreateReleaseVersionFile.py ${{  inputs.TAG }} "$INSTALL_DIR"
       - uses: actions/upload-artifact@v4
         with:
           name: Artifacts-MacOS
