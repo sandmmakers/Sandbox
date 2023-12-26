@@ -21,7 +21,8 @@ jobs:
     environment: Deployment
     env:
       tag: ${{ github.ref_name }}
-      windows_stem: Sandbox-${{ github.ref_name }}-windows-x86_64
+      stem: Sandbox-${{ github.ref_name }}-
+      windows_stem: ${{ stem }}windows-x86_64
       linux_stem: Sandbox-${{ github.ref_name }}-linux-x86_64
       macos_stem: Sandbox-${{ github.ref_name }}-macos-x86_64
       hashes_file: Sandbox-${{ github.ref_name }}-SHA-256.txt
